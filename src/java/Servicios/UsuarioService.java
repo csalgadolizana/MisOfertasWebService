@@ -6,6 +6,8 @@
 package Servicios;
 
 import Entidades.Usuario;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -39,19 +41,25 @@ public class UsuarioService {
 ////        query.setParameter("contrasena", contrasenaa);
 //        return u;
 
-        Query q = em.createNativeQuery("SELECT * from TABLE( autenticacion_package.function_return_user(?,?))", Usuario.class);
-        q.setParameter(1, correo);
-        q.setParameter(2, contrasena);
-        List<Usuario> usuarios = q.getResultList();
+        try {
+            Query q = em.createNativeQuery("SELECT * from TABLE( autenticacion_package.function_return_user(?,?))", Usuario.class);
+            q.setParameter(1, correo);
+            q.setParameter(2, contrasena);
+            List<Usuario> usuarios = q.getResultList();
 
-        for (Usuario a : usuarios) {
+            for (Usuario a : usuarios) {
 //            System.out.println("Author "
 //                    + a.getFirstName()
 //                    + " "
 //                    + a.getLastName());
-            return a;
+                return a;
+            }
+
+        } catch (Exception e) {
+            return new Usuario(BigDecimal.ZERO, "Error al iniciar sesion", e.getMessage(), BigInteger.TEN);
         }
-        return null;
+//        return null;
+        return new Usuario(BigDecimal.ZERO);
     }
 
     /**
