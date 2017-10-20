@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entidades.Ciudad;
 import Entidades.Cliente;
 import java.util.Date;
 import java.util.List;
@@ -29,8 +30,9 @@ public class ClienteService {
 
     @WebMethod(operationName = "Listado_clientes")
     public List<Cliente> ListadoCliente() {
-        TypedQuery<Cliente> query = em.createNamedQuery("Cliente.findAll", Cliente.class);
-        return query.getResultList();
+        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_cliente")

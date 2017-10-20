@@ -55,6 +55,9 @@
     <service name="CargoService">
       <implementation-class>Servicios.CargoService</implementation-class>
     </service>
+    <service name="CiudadService">
+      <implementation-class>Servicios.CiudadService</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

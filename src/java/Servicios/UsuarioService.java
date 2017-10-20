@@ -5,8 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Categoria;
-import Entidades.Puntos;
 import Entidades.Usuario;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -57,8 +55,9 @@ public class UsuarioService {
      */
     @WebMethod(operationName = "Listado_usuarios")
     public List<Usuario> ListadoUsuarios() {
-        TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findAll", Usuario.class);
-        return query.getResultList();
+        List<Usuario> arr_cust = (List<Usuario>) em.createNativeQuery("select * from VIEW_USUARIOS c", Usuario.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "CREAR_USUARIO")
@@ -96,7 +95,7 @@ public class UsuarioService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_USUARIO")
     public String ModificarUsuario(
             @WebParam(name = "id") int id, @WebParam(name = "correo") String correo,
@@ -132,7 +131,7 @@ public class UsuarioService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_usuario")
     public String EliminarUsuario(@WebParam(name = "id") int idd) {
         try {

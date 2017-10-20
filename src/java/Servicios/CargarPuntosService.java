@@ -6,6 +6,7 @@
 package Servicios;
 
 import Entidades.CargarPuntos;
+import Entidades.Usuario;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -14,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,8 +28,9 @@ public class CargarPuntosService {
 
     @WebMethod(operationName = "Listado_cargar_puntos")
     public List<CargarPuntos> ListadoCargarPuntos() {
-        TypedQuery<CargarPuntos> query = em.createNamedQuery("CargarPuntos.findAll", CargarPuntos.class);
-        return query.getResultList();
+        List<CargarPuntos> arr_cust = (List<CargarPuntos>) em.createNativeQuery("select * from VIEW_CARGARPUNTOS c", CargarPuntos.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_cargar_puntos")

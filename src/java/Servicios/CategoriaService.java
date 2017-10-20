@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entidades.Cargo;
 import Entidades.Categoria;
 import java.util.List;
 import javax.jws.WebService;
@@ -31,8 +32,9 @@ public class CategoriaService {
      */
     @WebMethod(operationName = "Listado_categorias")
     public List<Categoria> ListadoCategorias() {
-        TypedQuery<Categoria> query = em.createNamedQuery("Categoria.findAll", Categoria.class);
-        return query.getResultList();
+        List<Categoria> arr_cust = (List<Categoria>) em.createNativeQuery("select * from VIEW_CATEGORIA c", Categoria.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_categoria")
