@@ -4,6 +4,54 @@
     <service name="UsuarioService">
       <implementation-class>Servicios.UsuarioService</implementation-class>
     </service>
+    <service name="CategoriaService">
+      <implementation-class>Servicios.CategoriaService</implementation-class>
+    </service>
+    <service name="CargarPuntosService">
+      <implementation-class>Servicios.CargarPuntosService</implementation-class>
+    </service>
+    <service name="ClienteService">
+      <implementation-class>Servicios.ClienteService</implementation-class>
+    </service>
+    <service name="DescuentoService">
+      <implementation-class>Servicios.DescuentoService</implementation-class>
+    </service>
+    <service name="DetalleOfertaService">
+      <implementation-class>Servicios.DetalleOfertaService</implementation-class>
+    </service>
+    <service name="EmpresaService">
+      <implementation-class>Servicios.EmpresaService</implementation-class>
+    </service>
+    <service name="LocalService">
+      <implementation-class>Servicios.LocalService</implementation-class>
+    </service>
+    <service name="OfertaService">
+      <implementation-class>Servicios.OfertaService</implementation-class>
+    </service>
+    <service name="OfertaLocalService">
+      <implementation-class>Servicios.OfertaLocalService</implementation-class>
+    </service>
+    <service name="OfertaVistaService">
+      <implementation-class>Servicios.OfertaVistaService</implementation-class>
+    </service>
+    <service name="PersonaService">
+      <implementation-class>Servicios.PersonaService</implementation-class>
+    </service>
+    <service name="ProductoService">
+      <implementation-class>Servicios.ProductoService</implementation-class>
+    </service>
+    <service name="PuntosService">
+      <implementation-class>Servicios.PuntosService</implementation-class>
+    </service>
+    <service name="ReporteService">
+      <implementation-class>Servicios.ReporteService</implementation-class>
+    </service>
+    <service name="UsuarioOfertaService">
+      <implementation-class>Servicios.UsuarioOfertaService</implementation-class>
+    </service>
+    <service name="ValoracionService">
+      <implementation-class>Servicios.ValoracionService</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>
