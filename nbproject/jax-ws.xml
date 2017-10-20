@@ -52,6 +52,9 @@
     <service name="ValoracionService">
       <implementation-class>Servicios.ValoracionService</implementation-class>
     </service>
+    <service name="CargoService">
+      <implementation-class>Servicios.CargoService</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

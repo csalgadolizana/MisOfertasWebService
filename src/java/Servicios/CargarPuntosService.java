@@ -53,4 +53,19 @@ public class CargarPuntosService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_cargar_puntos")
+    public String EliminarCargarPuntos(
+            @WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_CATEGORIA");
+            query.registerStoredProcedureParameter("ID_CATE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_CARGAR", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "";
+        }
+    }
 }

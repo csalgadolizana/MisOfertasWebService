@@ -59,4 +59,18 @@ public class PuntosService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_puntos")
+    public String EliminarPuntos(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_PUNTOS");
+            query.registerStoredProcedureParameter("ID_PTS", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_PTS", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

@@ -56,4 +56,18 @@ public class OfertaLocalService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_oferta_local")
+    public String EliminarOfertaLocal(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_OFERTALOCAL");
+            query.registerStoredProcedureParameter("ID_OFELOC", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_OFELOC", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

@@ -73,4 +73,18 @@ public class ClienteService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_cliente")
+    public String EliminarCliente(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_CLIENTE");
+            query.registerStoredProcedureParameter("ID_CLI", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_CLI", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

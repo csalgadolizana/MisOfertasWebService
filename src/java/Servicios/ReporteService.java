@@ -50,4 +50,18 @@ public class ReporteService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_reporte")
+    public String EliminarReporte(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_REPORTE");
+            query.registerStoredProcedureParameter("ID_REPO", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_REPO", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

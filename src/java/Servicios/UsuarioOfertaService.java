@@ -55,4 +55,18 @@ public class UsuarioOfertaService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_usuario_oferta")
+    public String EliminarUsuarioOferta(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_USUARIO_OFERTA");
+            query.registerStoredProcedureParameter("ID_USUOFER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_USUOFER", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

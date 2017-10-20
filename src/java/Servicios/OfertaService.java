@@ -74,4 +74,18 @@ public class OfertaService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_oferta")
+    public String EliminarOferta(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_OFERTA");
+            query.registerStoredProcedureParameter("ID_OFE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_OFE", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

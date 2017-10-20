@@ -65,4 +65,18 @@ public class ProductoService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_producto")
+    public String EliminarProducto(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_PRODUCTO");
+            query.registerStoredProcedureParameter("ID_PRO", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_PRO", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

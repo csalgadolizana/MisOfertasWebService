@@ -59,4 +59,18 @@ public class PersonaService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_persona")
+    public String EliminarPersona(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_PERSONA");
+            query.registerStoredProcedureParameter("ID_PERSO", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_PERSO", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }

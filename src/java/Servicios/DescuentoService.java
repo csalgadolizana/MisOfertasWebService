@@ -70,4 +70,18 @@ public class DescuentoService {
             return 0 + "";
         }
     }
+    
+    @WebMethod(operationName = "Eliminar_descuento")
+    public String EliminarDescuento(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_DETALLE_OFERTA");
+            query.registerStoredProcedureParameter("ID_DO", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_DO", idd);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }
