@@ -60,6 +60,32 @@ public class PersonaService {
         }
     }
     
+    @WebMethod(operationName = "Modificar_persona")
+    public String ModificarPersona(
+            @WebParam(name = "id") int id, @WebParam(name = "nombre") String nombre,
+            @WebParam(name = "apellido") String apellido, @WebParam(name = "rut") String rut,
+            @WebParam(name = "sexo") int sexo
+    ) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_PERSONA");
+            query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("APE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_PER",id);
+            query.setParameter("NOMB", nombre);
+            query.setParameter("APE", apellido);
+            query.setParameter("RUT", rut);
+            query.setParameter("SE", sexo);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "";
+        }
+    }
+    
     @WebMethod(operationName = "Eliminar_persona")
     public String EliminarPersona(@WebParam(name = "id") int idd) {
         try {

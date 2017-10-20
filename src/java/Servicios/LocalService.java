@@ -5,9 +5,7 @@
  */
 package Servicios;
 
-import Entidades.Empresa;
 import Entidades.Local;
-import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -42,6 +40,32 @@ public class LocalService {
     ) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_LOCAL");
+            query.registerStoredProcedureParameter("ID_LOC", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("DIRE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_EMPRE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_CIUD", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_LOC", idd);
+            query.setParameter("DIRE", direccion);
+            query.setParameter("NOMB", nombre);
+            query.setParameter("ID_EMPRE", id_empresa);
+            query.setParameter("ID_CIUD", id_ciudad);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "";
+        }
+    }
+    
+    @WebMethod(operationName = "Modificar_local")
+    public String ModificarLocal(
+            @WebParam(name = "id") int idd, @WebParam(name = "direccion") String direccion,
+            @WebParam(name = "nombre") String nombre, @WebParam(name = "id_empresa") int id_empresa,
+            @WebParam(name = "id_ciudad") int id_ciudad
+    ) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_LOCAL");
             query.registerStoredProcedureParameter("ID_LOC", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("DIRE", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);

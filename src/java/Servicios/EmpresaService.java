@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Cliente;
 import Entidades.Empresa;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +42,37 @@ public class EmpresaService {
     ) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_CLIENTE");
+            query.registerStoredProcedureParameter("ID_EM", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("INI", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACTU", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_EM", idd);
+            query.setParameter("RUT", rut);
+            query.setParameter("NOMB", nombre);
+            query.setParameter("DES", descripcion);
+            query.setParameter("INI", fecha_inicio);
+            query.setParameter("ACTU", fecha_actualizacion);
+            query.setParameter("ID_ES", id_estado);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "";
+        }
+    }
+    
+    @WebMethod(operationName = "Modificar_empresa")
+    public String ModificarEmpresa(
+            @WebParam(name = "id") int idd, @WebParam(name = "rut") String rut,
+            @WebParam(name = "nombre") String nombre, @WebParam(name = "descripcion") String descripcion,
+            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
+            @WebParam(name = "id_estado") String id_estado
+    ) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_EMPRESA");
             query.registerStoredProcedureParameter("ID_EM", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);

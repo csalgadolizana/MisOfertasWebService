@@ -66,6 +66,39 @@ public class ProductoService {
         }
     }
     
+    @WebMethod(operationName = "Modificar_producto")
+    public String ModificarProducto(
+            @WebParam(name = "id") int id, @WebParam(name = "nombre") String nombre,
+            @WebParam(name = "descripcion") String descripcion, @WebParam(name = "precio") int precio,
+            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
+            @WebParam(name = "ruta_imagen") String ruta_imagen, @WebParam(name = "id_cagegoria") int id_cagegoria
+    ) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_PRODUCTO");
+            query.registerStoredProcedureParameter("ID_PRO", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("PREC", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("IMA", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_C", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_PRO", id);
+            query.setParameter("NOMB", nombre);
+            query.setParameter("DES", descripcion);
+            query.setParameter("PREC", precio);
+            query.setParameter("INI", fecha_inicio);
+            query.setParameter("ACTU", fecha_actualizacion);
+            query.setParameter("IMA", ruta_imagen);
+            query.setParameter("ID_C", id_cagegoria);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "";
+        }
+    }
+    
     @WebMethod(operationName = "Eliminar_producto")
     public String EliminarProducto(@WebParam(name = "id") int idd) {
         try {

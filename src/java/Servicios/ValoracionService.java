@@ -65,6 +65,37 @@ public class ValoracionService {
         }
     }
     
+    @WebMethod(operationName = "Modificar_valoracion")
+    public String ModificarValoracion(
+            @WebParam(name = "id") int id, @WebParam(name = "nota") int nota,
+            @WebParam(name = "boleta_adjunta") String boleta_adjunta, @WebParam(name = "fecha_valoracion") Date fecha_valoracion,
+            @WebParam(name = "id_cliente") int id_cliente, @WebParam(name = "id_oferta") int id_oferta,
+            @WebParam(name = "id_categoria") int id_categoria
+    ) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_VALORACION");
+            query.registerStoredProcedureParameter("ID_VALO", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("NOTA", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("BOLE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("FECHA", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("CLI_ID", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("OFER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("CATE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_VALO", id);
+            query.setParameter("NOTA", nota);
+            query.setParameter("BOLE", boleta_adjunta);
+            query.setParameter("FECHA", fecha_valoracion);
+            query.setParameter("CLI_ID", id_cliente);
+            query.setParameter("OFER", id_oferta);
+            query.setParameter("CATE", id_categoria);
+            query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "";
+        }
+    }
+    
     @WebMethod(operationName = "Eliminar_valoracion")
     public String EliminarValoracion(@WebParam(name = "id") int idd) {
         try {
