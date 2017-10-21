@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,8 +28,9 @@ public class DescuentoService {
 
     @WebMethod(operationName = "Listado_descuento")
     public List<Descuento> ListadoDescuento() {
-        TypedQuery<Descuento> query = em.createNamedQuery("Descuento.findAll", Descuento.class);
-        return query.getResultList();
+        List<Descuento> arr_cust = (List<Descuento>) em.createNativeQuery("select * from VIEW_DESCUENTO d", Descuento.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_descuento")
@@ -112,10 +112,10 @@ public class DescuentoService {
     @WebMethod(operationName = "Eliminar_descuento")
     public String EliminarDescuento(@WebParam(name = "id") int idd) {
         try {
-            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_DETALLE_OFERTA");
-            query.registerStoredProcedureParameter("ID_DO", Number.class, ParameterMode.IN);
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_DESCUENTO");
+            query.registerStoredProcedureParameter("ID_DES", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
-            query.setParameter("ID_DO", idd);
+            query.setParameter("ID_DES", idd);
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {

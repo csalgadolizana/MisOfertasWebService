@@ -1,21 +1,18 @@
 package Entidades;
 
 import Entidades.Estado;
-import Entidades.Local;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-10-20T01:52:55")
+@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-10-20T23:50:31")
 @StaticMetamodel(Empresa.class)
 public class Empresa_ { 
 
     public static volatile SingularAttribute<Empresa, String> rut;
     public static volatile SingularAttribute<Empresa, String> descripcion;
-    public static volatile CollectionAttribute<Empresa, Local> localCollection;
     public static volatile SingularAttribute<Empresa, Date> inicio;
     public static volatile SingularAttribute<Empresa, BigDecimal> idEmpresa;
     public static volatile SingularAttribute<Empresa, Estado> estadoIdEstado;

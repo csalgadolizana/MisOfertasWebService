@@ -30,8 +30,9 @@ public class PersonaService {
 
     @WebMethod(operationName = "Listado_personas")
     public List<Persona> ListadoPersona() {
-        TypedQuery<Persona> query = em.createNamedQuery("Persona.findAll", Persona.class);
-        return query.getResultList();
+        List<Persona> arr_cust = (List<Persona>) em.createNativeQuery("select * from VIEW_PERSONA p", Persona.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_persona")
@@ -48,7 +49,7 @@ public class PersonaService {
             query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
-            query.setParameter("ID_PER",id);
+            query.setParameter("ID_PER", id);
             query.setParameter("NOMB", nombre);
             query.setParameter("APE", apellido);
             query.setParameter("RUT", rut);
@@ -59,7 +60,7 @@ public class PersonaService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_persona")
     public String ModificarPersona(
             @WebParam(name = "id") int id, @WebParam(name = "nombre") String nombre,
@@ -74,7 +75,7 @@ public class PersonaService {
             query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
-            query.setParameter("ID_PER",id);
+            query.setParameter("ID_PER", id);
             query.setParameter("NOMB", nombre);
             query.setParameter("APE", apellido);
             query.setParameter("RUT", rut);
@@ -85,7 +86,7 @@ public class PersonaService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_persona")
     public String EliminarPersona(@WebParam(name = "id") int idd) {
         try {

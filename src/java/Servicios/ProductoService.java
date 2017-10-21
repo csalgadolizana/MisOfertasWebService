@@ -29,8 +29,9 @@ public class ProductoService {
 
     @WebMethod(operationName = "Listado_productos")
     public List<Producto> ListadoProductos() {
-        TypedQuery<Producto> query = em.createNamedQuery("Producto.findAll", Producto.class);
-        return query.getResultList();
+        List<Producto> arr_cust = (List<Producto>) em.createNativeQuery("select * from VIEW_PRODUCTO p", Producto.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_producto")

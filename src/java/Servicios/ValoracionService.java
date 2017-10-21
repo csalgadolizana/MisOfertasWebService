@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Usuariooferta;
 import Entidades.Valoracion;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,8 +28,9 @@ public class ValoracionService {
 
     @WebMethod(operationName = "Listado_valoraciones")
     public List<Valoracion> ListadoValoracion() {
-        TypedQuery<Valoracion> query = em.createNamedQuery("Valoracion.findAll", Valoracion.class);
-        return query.getResultList();
+        List<Valoracion> arr_cust = (List<Valoracion>) em.createNativeQuery("select * from VIEW_VALORACION v", Valoracion.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_valoracion")

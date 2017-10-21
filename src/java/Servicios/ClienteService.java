@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Ciudad;
 import Entidades.Cliente;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *

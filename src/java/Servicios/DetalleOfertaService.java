@@ -5,9 +5,7 @@
  */
 package Servicios;
 
-import Entidades.Descuento;
 import Entidades.DetalleOferta;
-import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -30,8 +28,9 @@ public class DetalleOfertaService {
 
     @WebMethod(operationName = "Listado_detalle_oferta")
     public List<DetalleOferta> ListadoDetalleOfertas() {
-        TypedQuery<DetalleOferta> query = em.createNamedQuery("Descuento.findAll", DetalleOferta.class);
-        return query.getResultList();
+        List<DetalleOferta> arr_cust = (List<DetalleOferta>) em.createNativeQuery("select * from VIEW_DETALLEOFERTA d", DetalleOferta.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_detalle_oferta")

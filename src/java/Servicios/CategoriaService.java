@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Cargo;
 import Entidades.Categoria;
 import java.util.List;
 import javax.jws.WebService;
@@ -15,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *

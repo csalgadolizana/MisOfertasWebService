@@ -5,9 +5,7 @@
  */
 package Servicios;
 
-import Entidades.Oferta;
 import Entidades.Ofertalocal;
-import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -16,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,8 +27,9 @@ public class OfertaLocalService {
 
     @WebMethod(operationName = "Listado_oferta_local")
     public List<Ofertalocal> ListadoOfertaLocal() {
-        TypedQuery<Ofertalocal> query = em.createNamedQuery("OfertaLocal.findAll", Ofertalocal.class);
-        return query.getResultList();
+        List<Ofertalocal> arr_cust = (List<Ofertalocal>) em.createNativeQuery("select * from VIEW_OFERTALOCAL o", Ofertalocal.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_oferta_local")

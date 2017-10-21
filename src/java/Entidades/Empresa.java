@@ -7,26 +7,21 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Empresa.findByIdEmpresa", query = "SELECT e FROM Empresa e WHERE e.idEmpresa = :idEmpresa")
     , @NamedQuery(name = "Empresa.findByRut", query = "SELECT e FROM Empresa e WHERE e.rut = :rut")
     , @NamedQuery(name = "Empresa.findByNombre", query = "SELECT e FROM Empresa e WHERE e.nombre = :nombre")
+    , @NamedQuery(name = "Empresa.findByDescripcion", query = "SELECT e FROM Empresa e WHERE e.descripcion = :descripcion")
     , @NamedQuery(name = "Empresa.findByInicio", query = "SELECT e FROM Empresa e WHERE e.inicio = :inicio")
     , @NamedQuery(name = "Empresa.findByActualizacion", query = "SELECT e FROM Empresa e WHERE e.actualizacion = :actualizacion")})
 public class Empresa implements Serializable {
@@ -63,7 +59,7 @@ public class Empresa implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Column(name = "INICIO")
@@ -72,8 +68,6 @@ public class Empresa implements Serializable {
     @Column(name = "ACTUALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date actualizacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
-    private Collection<Local> localCollection;
     @JoinColumn(name = "ESTADO_ID_ESTADO", referencedColumnName = "ID_ESTADO")
     @ManyToOne(optional = false)
     private Estado estadoIdEstado;
@@ -138,15 +132,6 @@ public class Empresa implements Serializable {
 
     public void setActualizacion(Date actualizacion) {
         this.actualizacion = actualizacion;
-    }
-
-    @XmlTransient
-    public Collection<Local> getLocalCollection() {
-        return localCollection;
-    }
-
-    public void setLocalCollection(Collection<Local> localCollection) {
-        this.localCollection = localCollection;
     }
 
     public Estado getEstadoIdEstado() {

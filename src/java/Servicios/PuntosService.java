@@ -30,8 +30,9 @@ public class PuntosService {
 
     @WebMethod(operationName = "Listado_puntos")
     public List<Puntos> ListadoPuntos() {
-        TypedQuery<Puntos> query = em.createNamedQuery("Puntos.findAll", Puntos.class);
-        return query.getResultList();
+        List<Puntos> arr_cust = (List<Puntos>) em.createNativeQuery("select * from VIEW_PUNTOS p", Puntos.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_puntos")

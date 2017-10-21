@@ -5,13 +5,10 @@
  */
 package Servicios;
 
-import Entidades.Cargo;
-import Entidades.Categoria;
 import Entidades.Ciudad;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

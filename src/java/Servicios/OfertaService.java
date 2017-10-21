@@ -29,8 +29,9 @@ public class OfertaService {
 
     @WebMethod(operationName = "Listado_oferta")
     public List<Oferta> ListadoOferta() {
-        TypedQuery<Oferta> query = em.createNamedQuery("Oferta.findAll", Oferta.class);
-        return query.getResultList();
+        List<Oferta> arr_cust = (List<Oferta>) em.createNativeQuery("select * from VIEW_OFERTA o", Oferta.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_oferta")

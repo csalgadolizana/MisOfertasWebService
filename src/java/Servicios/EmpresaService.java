@@ -6,6 +6,7 @@
 package Servicios;
 
 import Entidades.Empresa;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -29,8 +30,9 @@ public class EmpresaService {
 
     @WebMethod(operationName = "Listado_empresa")
     public List<Empresa> ListadoEmpresa() {
-        TypedQuery<Empresa> query = em.createNamedQuery("Empresa.findAll", Empresa.class);
-        return query.getResultList();
+        List<Empresa> arr_cust = (List<Empresa>) em.createNativeQuery("select * from VIEW_EMPRESA d", Empresa.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_empresa")
@@ -38,10 +40,10 @@ public class EmpresaService {
             @WebParam(name = "id") int idd, @WebParam(name = "rut") String rut,
             @WebParam(name = "nombre") String nombre, @WebParam(name = "descripcion") String descripcion,
             @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
-            @WebParam(name = "id_estado") String id_estado
+            @WebParam(name = "id_estado") int id_estado
     ) {
         try {
-            StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_CLIENTE");
+            StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_EMPRESA");
             query.registerStoredProcedureParameter("ID_EM", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
@@ -50,7 +52,7 @@ public class EmpresaService {
             query.registerStoredProcedureParameter("ACTU", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
-            query.setParameter("ID_EM", idd);
+            query.setParameter("ID_EM", BigDecimal.valueOf(idd));
             query.setParameter("RUT", rut);
             query.setParameter("NOMB", nombre);
             query.setParameter("DES", descripcion);
@@ -60,16 +62,16 @@ public class EmpresaService {
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            return 0 + "";
+            return 0 + " Error " + e.getMessage() + " ";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_empresa")
     public String ModificarEmpresa(
-            @WebParam(name = "id") int idd, @WebParam(name = "rut") String rut,
+            @WebParam(name = "idd") int idd, @WebParam(name = "rut") String rut,
             @WebParam(name = "nombre") String nombre, @WebParam(name = "descripcion") String descripcion,
             @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
-            @WebParam(name = "id_estado") String id_estado
+            @WebParam(name = "id_estado") int id_estado
     ) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_EMPRESA");
@@ -77,8 +79,8 @@ public class EmpresaService {
             query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("INI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ACTU", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_EM", idd);
@@ -91,10 +93,10 @@ public class EmpresaService {
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            return 0 + "";
+            return 0 + " Error " + e.getMessage();
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_empresa")
     public String EliminarEmpresa(@WebParam(name = "id") int idd) {
         try {
@@ -105,7 +107,7 @@ public class EmpresaService {
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            return 0 + "err";
+            return 0 + " Error " + e.getMessage() + " ";
         }
     }
 }

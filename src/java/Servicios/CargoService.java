@@ -5,15 +5,12 @@
  */
 package Servicios;
 
-import Entidades.CargarPuntos;
 import Entidades.Cargo;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 /**
  *

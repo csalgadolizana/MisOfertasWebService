@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,8 +27,9 @@ public class LocalService {
 
     @WebMethod(operationName = "Listado_local")
     public List<Local> ListadoLocal() {
-        TypedQuery<Local> query = em.createNamedQuery("Empresa.findAll", Local.class);
-        return query.getResultList();
+        List<Local> arr_cust = (List<Local>) em.createNativeQuery("select * from VIEW_LOCAL l", Local.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_local")

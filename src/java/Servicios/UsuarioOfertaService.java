@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Puntos;
 import Entidades.Usuariooferta;
 import java.util.List;
 import javax.jws.WebService;

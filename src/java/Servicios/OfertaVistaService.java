@@ -24,7 +24,7 @@ import javax.persistence.TypedQuery;
  *
  * @author PC-Cristopher
  */
-@WebService(serviceName = "OfertaVistaService")
+@WebService(serviceName = "OfertaVisitaService")
 public class OfertaVistaService {
 
     @PersistenceContext

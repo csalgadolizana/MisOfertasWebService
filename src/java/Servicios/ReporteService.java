@@ -6,7 +6,7 @@
 package Servicios;
 
 import Entidades.Puntos;
-import java.util.Date;
+import Entidades.Reporte;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -28,9 +28,10 @@ public class ReporteService {
     EntityManager em;
 
     @WebMethod(operationName = "Listado_reportes")
-    public List<Puntos> ListadoReportes() {
-        TypedQuery<Puntos> query = em.createNamedQuery("Puntos.findAll", Puntos.class);
-        return query.getResultList();
+    public List<Reporte> ListadoReportes() {
+        List<Reporte> arr_cust = (List<Reporte>) em.createNativeQuery("select * from VIEW_REPORTE r", Reporte.class)
+                .getResultList();
+        return arr_cust;
     }
 
     @WebMethod(operationName = "Crear_reporte")
