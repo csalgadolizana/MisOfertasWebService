@@ -6,19 +6,17 @@
 package Servicios;
 
 import Entidades.Cliente;
-import Entidades.Persona;
 import Utils.MailController;
-import java.util.Collections;
-import java.util.Comparator;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 
 /**
@@ -31,9 +29,27 @@ public class ClienteService {
     @PersistenceContext
     EntityManager em;
 
+    @WebMethod(operationName = "Autenticacion")
+    public Cliente Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
+        try {
+            Query q = em.createNativeQuery("SELECT * from TABLE( autenticacion_cliente_package.function_return_cliente(?,?))", Cliente.class);
+            q.setParameter(1, correo);
+            q.setParameter(2, contrasena);
+            List<Cliente> clientes = q.getResultList();
+            for (Cliente c : clientes) {
+                return c;
+            }
+        } catch (Exception e) {
+            System.err.println("ClienteService -> Autenticar -> " + e.getMessage());
+            return new Cliente(BigDecimal.ZERO);
+        }
+        return new Cliente(BigDecimal.ZERO);
+    }
+
     @WebMethod(operationName = "Listado_clientes")
     public List<Cliente> ListadoCliente() {
-        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class)
+        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class
+        )
                 .getResultList();
         return arr_cust;
     }
@@ -48,18 +64,42 @@ public class ClienteService {
             @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_CLIENTE");
-            query.registerStoredProcedureParameter("ID_CLI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("FECH", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("CORRE", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("PASS", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ACEP", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_CI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query
+                    .registerStoredProcedureParameter("ID_CLI", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("FECH", Date.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("CORRE", String.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("PASS", String.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("TE", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ACEP", String.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("INI", Date.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ACTU", Date.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ID_CI", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ID_ES", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ID_PER", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("SALIDA", Number.class,
+                            ParameterMode.OUT);
             query.setParameter("ID_CLI", idd);
             query.setParameter("FECH", fecha_nacimiento);
             query.setParameter("CORRE", correo);
@@ -101,18 +141,42 @@ public class ClienteService {
             @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_CLIENTE");
-            query.registerStoredProcedureParameter("ID_CLI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("FECH", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("CORRE", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("PASS", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ACEP", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_CI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query
+                    .registerStoredProcedureParameter("ID_CLI", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("FECH", Date.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("CORRE", String.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("PASS", String.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("TE", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ACEP", String.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("INI", Date.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ACTU", Date.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ID_CI", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ID_ES", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("ID_PER", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("SALIDA", Number.class,
+                            ParameterMode.OUT);
             query.setParameter("ID_CLI", idd);
             query.setParameter("FECH", fecha_nacimiento);
             query.setParameter("CORRE", correo);
@@ -135,8 +199,12 @@ public class ClienteService {
     public String EliminarCliente(@WebParam(name = "id") int idd) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("ELIMINAR_CLIENTE");
-            query.registerStoredProcedureParameter("ID_CLI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query
+                    .registerStoredProcedureParameter("ID_CLI", Number.class,
+                            ParameterMode.IN);
+            query
+                    .registerStoredProcedureParameter("SALIDA", Number.class,
+                            ParameterMode.OUT);
             query.setParameter("ID_CLI", idd);
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
