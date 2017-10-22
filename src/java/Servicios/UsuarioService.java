@@ -44,7 +44,7 @@ public class UsuarioService {
                 return a;
             }
         } catch (Exception e) {
-            return new Usuario(BigDecimal.ZERO, "Error al iniciar sesion", e.getMessage(), BigInteger.TEN);
+            return new Usuario(BigDecimal.ZERO);
         }
         return new Usuario(BigDecimal.ZERO);
     }
