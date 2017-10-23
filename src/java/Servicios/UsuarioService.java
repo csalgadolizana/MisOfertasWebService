@@ -7,7 +7,6 @@ package Servicios;
 
 import Entidades.Usuario;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -33,17 +32,49 @@ public class UsuarioService {
      * Created by Cristopher Salgado Input String nombre de Usuario Input String
      * contraseña Output Usuario object
      */
-    @WebMethod(operationName = "Autenticacion")
-    public Usuario Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
+    
+    @WebMethod(operationName = "AutenticarTrabajador")
+    public Usuario AutenticarTrabajar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
         try {
-            Query q = em.createNativeQuery("SELECT * from TABLE( autenticacion_package.function_return_user(?,?))", Usuario.class);
+            Query q = em.createNativeQuery("SELECT * from TABLE( AUTENTICACION_PACKAGE.function_return_user(?,?))", Usuario.class);
             q.setParameter(1, correo);
             q.setParameter(2, contrasena);
             List<Usuario> usuarios = q.getResultList();
+//            List<Usuario> usuarios = (List<Usuario>) em.createNativeQuery("select * from VIEW_USUARIOS c", Usuario.class)
+//                    .getResultList();
             for (Usuario a : usuarios) {
-                return a;
+                if (correo.equals(a.getCorreo()) && contrasena.equals(a.getContrasena())) {
+                    return a;
+                }
             }
         } catch (Exception e) {
+            System.err.println("Error ");
+            System.err.println(e.getMessage());
+            return new Usuario(BigDecimal.ZERO);
+        }
+        return new Usuario(BigDecimal.ZERO);
+    }
+    
+    
+    
+    
+    @WebMethod(operationName = "Autenticacion")
+    public Object Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
+        try {
+            Query q = em.createNativeQuery("SELECT * from TABLE( AUTENTICACION_PACKAGE.function_return_user(?,?))", Usuario.class);
+            q.setParameter(1, correo);
+            q.setParameter(2, contrasena);
+            List<Usuario> usuarios = q.getResultList();
+//            List<Usuario> usuarios = (List<Usuario>) em.createNativeQuery("select * from VIEW_USUARIOS c", Usuario.class)
+//                    .getResultList();
+            for (Usuario a : usuarios) {
+                if (correo.equals(a.getCorreo()) && contrasena.equals(a.getContrasena())) {
+                    return a;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error ");
+            System.err.println(e.getMessage());
             return new Usuario(BigDecimal.ZERO);
         }
         return new Usuario(BigDecimal.ZERO);

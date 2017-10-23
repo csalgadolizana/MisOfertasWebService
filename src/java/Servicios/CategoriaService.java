@@ -38,7 +38,7 @@ public class CategoriaService {
     @WebMethod(operationName = "Crear_categoria")
     public String modificarCategoria(@WebParam(name = "id") int idd, @WebParam(name = "desc") String desc) {
         try {
-            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_CATEGORIA");
+            StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_CATEGORIA");
             query.registerStoredProcedureParameter("ID_CAT", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
@@ -54,7 +54,7 @@ public class CategoriaService {
     @WebMethod(operationName = "Modificar_categoria")
     public String crearCategoria(@WebParam(name = "id") int idd, @WebParam(name = "desc") String desc) {
         try {
-            StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_CATEGORIA");
+            StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_CATEGORIA");
             query.registerStoredProcedureParameter("ID_CAT", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
