@@ -3,8 +3,6 @@
   <persistence-unit name="MisOfertasWebServicePU" transaction-type="JTA">
     <jta-data-source>java:app/JDNI_Mis_Ofertas</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
-    </properties>
+    <properties/>
   </persistence-unit>
 </persistence>

@@ -17,7 +17,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-10-22T18:16:52")
+@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-10-26T16:08:03")
 @StaticMetamodel(Oferta.class)
 public class Oferta_ { 
 
@@ -33,9 +33,9 @@ public class Oferta_ {
     public static volatile SingularAttribute<Oferta, Estado> estadoIdEstado;
     public static volatile CollectionAttribute<Oferta, Ofertalocal> ofertalocalCollection;
     public static volatile SingularAttribute<Oferta, String> nombre;
-    public static volatile SingularAttribute<Oferta, Informativo> informativo;
     public static volatile CollectionAttribute<Oferta, Usuariooferta> usuarioofertaCollection;
     public static volatile SingularAttribute<Oferta, BigInteger> precioNormal;
+    public static volatile CollectionAttribute<Oferta, Informativo> informativoCollection;
     public static volatile SingularAttribute<Oferta, BigInteger> precioOferta;
     public static volatile SingularAttribute<Oferta, BigInteger> numeroVisitas;
     public static volatile SingularAttribute<Oferta, Date> actualizacion;

@@ -85,6 +85,7 @@ public class UsuarioService {
      */
     @WebMethod(operationName = "Listado_usuarios")
     public List<Usuario> ListadoUsuarios() {
+        System.err.println("cirilo");
         List<Usuario> arr_cust = (List<Usuario>) em.createNativeQuery("select * from VIEW_USUARIOS c", Usuario.class)
                 .getResultList();
         return arr_cust;
@@ -128,11 +129,13 @@ public class UsuarioService {
 
     @WebMethod(operationName = "Modificar_USUARIO")
     public String ModificarUsuario(
-            @WebParam(name = "id") int id, @WebParam(name = "correo") String correo,
-            @WebParam(name = "password") String password, @WebParam(name = "telefono") int telefono,
-            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
-            @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona,
-            @WebParam(name = "id_cargo") int id_cargo
+            @WebParam(name = "id") int id, 
+            @WebParam(name = "correo") String correo,
+            @WebParam(name = "password") String password,
+            @WebParam(name = "telefono") int telefono,
+            @WebParam(name = "fecha_inicio") Date fecha_inicio, 
+            @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion
+           
     ) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_USUARIO");
@@ -142,9 +145,7 @@ public class UsuarioService {
             query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ID_CAR", Number.class, ParameterMode.IN);
+            
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_US", id);
             query.setParameter("COR", correo);
@@ -152,9 +153,7 @@ public class UsuarioService {
             query.setParameter("TE", telefono);
             query.setParameter("INI", fecha_inicio);
             query.setParameter("ACTU", fecha_actualizacion);
-            query.setParameter("ID_ES", id_estado);
-            query.setParameter("ID_PER", id_persona);
-            query.setParameter("ID_CAR", id_cargo);
+            
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {

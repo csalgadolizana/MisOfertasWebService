@@ -22,20 +22,19 @@ public class MailController {
         try {
             sendHtmlEmail mailer = new sendHtmlEmail();
             String cuerpoMensaje;
-//            String cuerpoMensaje = "<i>Wena Ñejoso!</i><br>";
-//            cuerpoMensaje += "<b>¿Como esta quedando esta wea?</b><br>";
-//            cuerpoMensaje += "<font color=red>shut up vieja culia</font>";
             cuerpoMensaje = "<center>"
                     + "<h1>" + titulo + "</h1><br>"
+                    + "<img width='300px' src='https://image.prntscr.com/image/eaSJ_oT1SZSGNaXT0BDbRQ.jpg' ></img><br>"
+                    + "<br>"
                     + message
                     + "<br>"
-                    + "Vitanos en <a href='http://192.168.1.33:17225/MisOfertasWeb/'>MisOfertas.cl</a>"
+                    + "Vitanos en <a href='http://localhost:17225/MisOfertasWeb/'>MisOfertas.cl</a>"
                     + "</center>";
 
             mailer.sendHtmlEmail(host, port, mailFrom, password,
                     mailTo, subject, cuerpoMensaje);
         } catch (Exception e) {
-            System.err.println("¡Error! " + e.getMessage());
+            System.err.println("¡Error! enviarBienvenida() -> " + e.getMessage());
             System.err.println("¡Error! en -> " + e.getLocalizedMessage());
         }
     }

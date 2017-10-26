@@ -14,7 +14,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author PC-Cristopher
+ * @author LC1300XXXX
  */
 @Entity
 @Table(name = "CIUDAD")
@@ -35,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c")
     , @NamedQuery(name = "Ciudad.findByIdCiudad", query = "SELECT c FROM Ciudad c WHERE c.idCiudad = :idCiudad")
-    , @NamedQuery(name = "Ciudad.findByNombre", query = "SELECT c FROM Ciudad c WHERE c.nombre = :nombre")})
+    , @NamedQuery(name = "Ciudad.findByNombre", query = "SELECT c FROM Ciudad c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "Ciudad.findByDescripcion", query = "SELECT c FROM Ciudad c WHERE c.descripcion = :descripcion")})
 public class Ciudad implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,7 +52,7 @@ public class Ciudad implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudadIdCiudad")

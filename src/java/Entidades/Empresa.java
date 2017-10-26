@@ -7,8 +7,10 @@ package Entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,16 +18,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author PC-Cristopher
+ * @author LC1300XXXX
  */
 @Entity
 @Table(name = "EMPRESA")
@@ -68,6 +72,8 @@ public class Empresa implements Serializable {
     @Column(name = "ACTUALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date actualizacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
+    private Collection<Local> localCollection;
     @JoinColumn(name = "ESTADO_ID_ESTADO", referencedColumnName = "ID_ESTADO")
     @ManyToOne(optional = false)
     private Estado estadoIdEstado;
@@ -132,6 +138,15 @@ public class Empresa implements Serializable {
 
     public void setActualizacion(Date actualizacion) {
         this.actualizacion = actualizacion;
+    }
+
+    @XmlTransient
+    public Collection<Local> getLocalCollection() {
+        return localCollection;
+    }
+
+    public void setLocalCollection(Collection<Local> localCollection) {
+        this.localCollection = localCollection;
     }
 
     public Estado getEstadoIdEstado() {

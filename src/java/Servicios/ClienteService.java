@@ -64,42 +64,18 @@ public class ClienteService {
             @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_CLIENTE");
-            query
-                    .registerStoredProcedureParameter("ID_CLI", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("FECH", Date.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("CORRE", String.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("PASS", String.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("TE", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ACEP", String.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("INI", Date.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ACTU", Date.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ID_CI", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ID_ES", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ID_PER", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("SALIDA", Number.class,
-                            ParameterMode.OUT);
+            query.registerStoredProcedureParameter("ID_CLI", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("FECH", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("CORRE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("PASS", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACEP", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_CI", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_CLI", idd);
             query.setParameter("FECH", fecha_nacimiento);
             query.setParameter("CORRE", correo);
@@ -114,17 +90,16 @@ public class ClienteService {
             query.execute();
             try {
                 MailController mailController = new MailController();
-//                List<Persona> lista = new PersonaService().ListadoPersona();
-//                Persona p = Collections.max(lista, Comparator.comparing(Persona::getIdpersona));
-                System.err.println("333333333333333333333333333333333333333333333333333333333333333333333333333333333333333");
-//                System.err.println(p.getNombre());
+                System.err.println("Enviando Mail.");
+                System.err.println("Enviando Mail..");
+                System.err.println("Enviando Mail...");
+                System.err.println("Enviando Mail....");
+                System.err.println("Enviando Mail.....");
                 System.err.println(correo);
-                mailController.enviarBienvenida(correo, "Bienvenido a mis ofertas", "Hola ", "Esperamos que disfutes de las ofertas que estan disponibles es nuestra tienda", "Saludos de todo el equipo de misOfertas :)");
+                mailController.enviarBienvenida(correo, "Bienvenido a mis ofertas", "Estas abriendo tu mundo a nuevas ofertas ", "Esperamos que disfutes de las ofertas que estan disponibles es nuestra tienda", "Saludos de todo el equipo de misOfertas :)");
             } catch (Exception e) {
                 System.err.println(e.getMessage());
-
             }
-            System.err.println("333333333333333333333333333333333333333333333333333333333333333333333333333333333333333");
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
             return 0 + "" + e.getMessage();

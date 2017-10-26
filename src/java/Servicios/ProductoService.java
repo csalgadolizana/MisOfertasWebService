@@ -94,6 +94,7 @@ public class ProductoService {
             query.setParameter("IMA", ruta_imagen);
             query.setParameter("ID_C", id_cagegoria);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
             return 0 + "";

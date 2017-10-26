@@ -16,7 +16,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author PC-Cristopher
+ * @author LC1300XXXX
  */
 @Entity
 @Table(name = "PRODUCTO")
@@ -40,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p")
     , @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto")
     , @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre")
+    , @NamedQuery(name = "Producto.findByDescripcion", query = "SELECT p FROM Producto p WHERE p.descripcion = :descripcion")
     , @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio")
     , @NamedQuery(name = "Producto.findByInicio", query = "SELECT p FROM Producto p WHERE p.inicio = :inicio")
     , @NamedQuery(name = "Producto.findByActualizacion", query = "SELECT p FROM Producto p WHERE p.actualizacion = :actualizacion")
@@ -60,7 +60,7 @@ public class Producto implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Basic(optional = false)

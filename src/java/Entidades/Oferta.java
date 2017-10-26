@@ -16,12 +16,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author PC-Cristopher
+ * @author LC1300XXXX
  */
 @Entity
 @Table(name = "OFERTA")
@@ -41,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Oferta.findAll", query = "SELECT o FROM Oferta o")
     , @NamedQuery(name = "Oferta.findByIdOferta", query = "SELECT o FROM Oferta o WHERE o.idOferta = :idOferta")
     , @NamedQuery(name = "Oferta.findByNombre", query = "SELECT o FROM Oferta o WHERE o.nombre = :nombre")
+    , @NamedQuery(name = "Oferta.findByDescripcion", query = "SELECT o FROM Oferta o WHERE o.descripcion = :descripcion")
     , @NamedQuery(name = "Oferta.findByPrecioNormal", query = "SELECT o FROM Oferta o WHERE o.precioNormal = :precioNormal")
     , @NamedQuery(name = "Oferta.findByPrecioOferta", query = "SELECT o FROM Oferta o WHERE o.precioOferta = :precioOferta")
     , @NamedQuery(name = "Oferta.findByNumeroVisitas", query = "SELECT o FROM Oferta o WHERE o.numeroVisitas = :numeroVisitas")
@@ -64,7 +63,7 @@ public class Oferta implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Basic(optional = false)
@@ -97,8 +96,8 @@ public class Oferta implements Serializable {
     private Collection<OfertasVisitas> ofertasVisitasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "oferta")
     private Collection<DetalleOferta> detalleOfertaCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "ofertaIdOferta")
-    private Informativo informativo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ofertaIdOferta")
+    private Collection<Informativo> informativoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ofertaIdOferta")
     private Collection<Ofertavisi> ofertavisiCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "oferta")
@@ -229,12 +228,13 @@ public class Oferta implements Serializable {
         this.detalleOfertaCollection = detalleOfertaCollection;
     }
 
-    public Informativo getInformativo() {
-        return informativo;
+    @XmlTransient
+    public Collection<Informativo> getInformativoCollection() {
+        return informativoCollection;
     }
 
-    public void setInformativo(Informativo informativo) {
-        this.informativo = informativo;
+    public void setInformativoCollection(Collection<Informativo> informativoCollection) {
+        this.informativoCollection = informativoCollection;
     }
 
     @XmlTransient

@@ -12,16 +12,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author PC-Cristopher
+ * @author LC1300XXXX
  */
 @Entity
 @Table(name = "INFORMATIVO")
@@ -39,7 +39,7 @@ public class Informativo implements Serializable {
     @Column(name = "ID_INFORMATIVO")
     private BigDecimal idInformativo;
     @JoinColumn(name = "OFERTA_ID_OFERTA", referencedColumnName = "ID_OFERTA")
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Oferta ofertaIdOferta;
 
     public Informativo() {

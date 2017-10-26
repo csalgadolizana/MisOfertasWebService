@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author PC-Cristopher
+ * @author LC1300XXXX
  */
 @Embeddable
 public class OfertalocalPK implements Serializable {
