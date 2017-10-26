@@ -57,7 +57,7 @@ public class LocalService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_local")
     public String ModificarLocal(
             @WebParam(name = "id") int idd, @WebParam(name = "direccion") String direccion,
@@ -78,12 +78,14 @@ public class LocalService {
             query.setParameter("ID_EMPRE", id_empresa);
             query.setParameter("ID_CIUD", id_ciudad);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.out.println("Error en -> ModificarLocal() -> "+e.getMessage());
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_local")
     public String EliminarLocal(@WebParam(name = "id") int idd) {
         try {

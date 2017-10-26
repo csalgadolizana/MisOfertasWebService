@@ -5,12 +5,9 @@
  */
 package Servicios;
 
-import Entidades.Ofertalocal;
 import Entidades.OfertasVisitas;
-import Entidades.Ofertavisi;
 import java.util.Date;
 import java.util.List;
-import javafx.scene.chart.PieChart;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

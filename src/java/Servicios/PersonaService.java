@@ -5,9 +5,7 @@
  */
 package Servicios;
 
-import Entidades.OfertasVisitas;
 import Entidades.Persona;
-import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -16,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -81,8 +78,10 @@ public class PersonaService {
             query.setParameter("RUT", rut);
             query.setParameter("SE", sexo);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.out.println("Error en -> ModificarPersona() -> "+e.getMessage());
             return 0 + "";
         }
     }

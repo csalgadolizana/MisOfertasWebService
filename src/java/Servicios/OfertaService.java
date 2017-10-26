@@ -107,11 +107,11 @@ public class OfertaService {
             query.setParameter("MIN_COM", min_compras);
             query.setParameter("MAX_COMP", max_compras);            
             query.setParameter("ACTU", fecha_actulizacion);
-            
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            System.err.println("err");
+            System.out.println("Error en -> ModificarOferta() -> "+e.getMessage());
             return 0 + "";
         }
     }

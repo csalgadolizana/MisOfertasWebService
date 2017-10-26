@@ -89,8 +89,10 @@ public class ValoracionService {
             query.setParameter("OFER", id_oferta);
             query.setParameter("CATE", id_categoria);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.out.println("Error en -> ModificarValoracion() -> "+e.getMessage());
             return 0 + "";
         }
     }

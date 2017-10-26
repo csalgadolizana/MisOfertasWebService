@@ -103,8 +103,10 @@ public class DescuentoService {
             query.setParameter("ID_ES", estado_id);
             query.setParameter("ID_CAT", categoria_id);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.err.println("Error en -> ModificarDescuento() ->" + e.getMessage());
             return 0 + "";
         }
     }

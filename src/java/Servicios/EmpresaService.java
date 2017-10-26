@@ -16,7 +16,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -91,9 +90,11 @@ public class EmpresaService {
             query.setParameter("ACTU", fecha_actualizacion);
             query.setParameter("ID_ES", id_estado);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            return 0 + " Error " + e.getMessage();
+            System.out.println(" Error en -> Modificar_empresa() -> " + e.getMessage());
+            return 0+"";
         }
     }
 

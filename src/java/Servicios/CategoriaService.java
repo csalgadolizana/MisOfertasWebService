@@ -61,6 +61,7 @@ public class CategoriaService {
             query.setParameter("ID_CAT", idd);
             query.setParameter("DES", desc);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
             return 0 + "";

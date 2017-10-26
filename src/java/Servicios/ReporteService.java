@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Puntos;
 import Entidades.Reporte;
 import java.util.List;
 import javax.jws.WebService;
@@ -15,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -51,7 +49,7 @@ public class ReporteService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_reporte")
     public String ModificarReporte(
             @WebParam(name = "id") int id, @WebParam(name = "local_id") int local_id
@@ -64,12 +62,14 @@ public class ReporteService {
             query.setParameter("ID_REPO", id);
             query.setParameter("ID_REPO", local_id);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.out.println("Error en -> ModificarReporte() -> " + e.getMessage());
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_reporte")
     public String EliminarReporte(@WebParam(name = "id") int idd) {
         try {

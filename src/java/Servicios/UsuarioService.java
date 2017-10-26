@@ -32,7 +32,6 @@ public class UsuarioService {
      * Created by Cristopher Salgado Input String nombre de Usuario Input String
      * contraseña Output Usuario object
      */
-    
     @WebMethod(operationName = "AutenticarTrabajador")
     public Usuario AutenticarTrabajar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
         try {
@@ -40,8 +39,6 @@ public class UsuarioService {
             q.setParameter(1, correo);
             q.setParameter(2, contrasena);
             List<Usuario> usuarios = q.getResultList();
-//            List<Usuario> usuarios = (List<Usuario>) em.createNativeQuery("select * from VIEW_USUARIOS c", Usuario.class)
-//                    .getResultList();
             for (Usuario a : usuarios) {
                 if (correo.equals(a.getCorreo()) && contrasena.equals(a.getContrasena())) {
                     return a;
@@ -54,10 +51,7 @@ public class UsuarioService {
         }
         return new Usuario(BigDecimal.ZERO);
     }
-    
-    
-    
-    
+
     @WebMethod(operationName = "Autenticacion")
     public Object Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
         try {
@@ -129,13 +123,12 @@ public class UsuarioService {
 
     @WebMethod(operationName = "Modificar_USUARIO")
     public String ModificarUsuario(
-            @WebParam(name = "id") int id, 
+            @WebParam(name = "id") int id,
             @WebParam(name = "correo") String correo,
             @WebParam(name = "password") String password,
             @WebParam(name = "telefono") int telefono,
-            @WebParam(name = "fecha_inicio") Date fecha_inicio, 
+            @WebParam(name = "fecha_inicio") Date fecha_inicio,
             @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion
-           
     ) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_USUARIO");
@@ -145,7 +138,7 @@ public class UsuarioService {
             query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
-            
+
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_US", id);
             query.setParameter("COR", correo);
@@ -153,10 +146,12 @@ public class UsuarioService {
             query.setParameter("TE", telefono);
             query.setParameter("INI", fecha_inicio);
             query.setParameter("ACTU", fecha_actualizacion);
-            
+
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.out.println("Error en -> ModificarUsuario() -> "+e.getMessage());
             return 0 + "";
         }
     }

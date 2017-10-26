@@ -14,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -39,20 +38,22 @@ public class DetalleOfertaService {
             @WebParam(name = "oferta_id") int oferta_id
     ) {
         try {
-            StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_DESCUENTO");
+            StoredProcedureQuery query = em.createStoredProcedureQuery("CREAR_DETALLEOFERTA");
             query.registerStoredProcedureParameter("ID_DETOFE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("PRDO", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("OFER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_DETOFE", idDetalleOferta);
             query.setParameter("PRDO", producto_id);
             query.setParameter("OFER", oferta_id);
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.out.println("Error en -> CrearDetalleOferta() ->" + e.getMessage());
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_detalle_oferta")
     public String EliminarDetalleOferta(@WebParam(name = "id") int idd) {
         try {

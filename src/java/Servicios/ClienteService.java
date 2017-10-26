@@ -116,42 +116,18 @@ public class ClienteService {
             @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona) {
         try {
             StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_CLIENTE");
-            query
-                    .registerStoredProcedureParameter("ID_CLI", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("FECH", Date.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("CORRE", String.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("PASS", String.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("TE", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ACEP", String.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("INI", Date.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ACTU", Date.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ID_CI", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ID_ES", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("ID_PER", Number.class,
-                            ParameterMode.IN);
-            query
-                    .registerStoredProcedureParameter("SALIDA", Number.class,
-                            ParameterMode.OUT);
+            query.registerStoredProcedureParameter("ID_CLI", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("FECH", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("CORRE", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("PASS", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACEP", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_CI", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_CLI", idd);
             query.setParameter("FECH", fecha_nacimiento);
             query.setParameter("CORRE", correo);
@@ -164,8 +140,10 @@ public class ClienteService {
             query.setParameter("ID_ES", id_estado);
             query.setParameter("ID_PER", id_persona);
             query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
+            System.err.println("Error en -> ModificarCliente() ->" + e.getMessage());
             return 0 + "";
         }
     }
