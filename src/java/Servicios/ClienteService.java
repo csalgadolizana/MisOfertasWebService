@@ -48,6 +48,7 @@ public class ClienteService {
 
     @WebMethod(operationName = "Listado_clientes")
     public List<Cliente> ListadoCliente() {
+        em.getEntityManagerFactory().getCache().evictAll();
         List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class
         )
                 .getResultList();

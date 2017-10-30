@@ -31,6 +31,7 @@ public class OfertaService {
     public List<Oferta> ListadoOferta() {
         List<Oferta> arr_cust = (List<Oferta>) em.createNativeQuery("select * from VIEW_OFERTA o", Oferta.class)
                 .getResultList();
+        em.getEntityManagerFactory().getCache().evictAll();
         return arr_cust;
     }
 
@@ -72,50 +73,49 @@ public class OfertaService {
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            System.err.println("err "+e.getMessage());
+            System.err.println("err " + e.getMessage());
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_oferta")
     public String ModificarOferta(
-            @WebParam(name = "id") int idd, 
+            @WebParam(name = "id") int idd,
             @WebParam(name = "nombre") String nombre,
-            @WebParam(name = "descripcion") String descripcion,             
-            @WebParam(name = "precio_oferta") int precio_oferta,            
-            @WebParam(name = "min_compras") int min_compras, 
-            @WebParam(name = "max_compras") int max_compras,            
+            @WebParam(name = "descripcion") String descripcion,
+            @WebParam(name = "precio_oferta") int precio_oferta,
+            @WebParam(name = "min_compras") int min_compras,
+            @WebParam(name = "max_compras") int max_compras,
             @WebParam(name = "fecha_actulizacion") Date fecha_actulizacion
-            
     ) {
         try {
             System.err.println("err");
             StoredProcedureQuery query = em.createStoredProcedureQuery("ACTUALIZAR_OFERTA");
             query.registerStoredProcedureParameter("ID_OFE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);            
-            query.registerStoredProcedureParameter("PREC_OFER", Number.class, ParameterMode.IN);            
+            query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("PREC_OFER", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("MIN_COM", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("MAX_COMP", Number.class, ParameterMode.IN);            
+            query.registerStoredProcedureParameter("MAX_COMP", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
-            
+
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_OFE", idd);
             query.setParameter("NOMB", nombre);
-            query.setParameter("DES", descripcion);            
-            query.setParameter("PREC_OFER", precio_oferta);            
+            query.setParameter("DES", descripcion);
+            query.setParameter("PREC_OFER", precio_oferta);
             query.setParameter("MIN_COM", min_compras);
-            query.setParameter("MAX_COMP", max_compras);            
+            query.setParameter("MAX_COMP", max_compras);
             query.setParameter("ACTU", fecha_actulizacion);
             query.execute();
             em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            System.out.println("Error en -> ModificarOferta() -> "+e.getMessage());
+            System.out.println("Error en -> ModificarOferta() -> " + e.getMessage());
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_oferta")
     public String EliminarOferta(@WebParam(name = "id") int idd) {
         try {
@@ -124,6 +124,21 @@ public class OfertaService {
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_OFE", idd);
             query.execute();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
+
+    @WebMethod(operationName = "publicar_oferta")
+    public String publicarOferta(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("PUBLICAR_OFERTA");
+            query.registerStoredProcedureParameter("ID_OFE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_OFE", idd);
+            query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
             return 0 + "err";
