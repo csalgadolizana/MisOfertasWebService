@@ -144,4 +144,19 @@ public class OfertaService {
             return 0 + "err";
         }
     }
+    
+    @WebMethod(operationName = "dejar_de_publicar_oferta")
+    public String dejarDePublicarOferta(@WebParam(name = "id") int idd) {
+        try {
+            StoredProcedureQuery query = em.createStoredProcedureQuery("CANCELACION_OFERTA");
+            query.registerStoredProcedureParameter("ID_OFE", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
+            query.setParameter("ID_OFE", idd);
+            query.execute();
+            em.getEntityManagerFactory().getCache().evictAll();
+            return query.getOutputParameterValue("SALIDA").toString();
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+    }
 }
