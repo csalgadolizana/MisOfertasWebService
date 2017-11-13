@@ -3,7 +3,6 @@ package Entidades;
 import Entidades.Ciudad;
 import Entidades.Descuento;
 import Entidades.Estado;
-import Entidades.OfertasVisitas;
 import Entidades.Ofertavisi;
 import Entidades.Persona;
 import Entidades.Puntos;
@@ -16,7 +15,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-10-26T17:21:35")
+@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-11-12T20:16:05")
 @StaticMetamodel(Cliente.class)
 public class Cliente_ { 
 
@@ -24,7 +23,6 @@ public class Cliente_ {
     public static volatile SingularAttribute<Cliente, Character> aceptaInformativo;
     public static volatile CollectionAttribute<Cliente, Puntos> puntosCollection;
     public static volatile SingularAttribute<Cliente, Date> fechaNacimiento;
-    public static volatile CollectionAttribute<Cliente, OfertasVisitas> ofertasVisitasCollection;
     public static volatile CollectionAttribute<Cliente, Valoracion> valoracionCollection;
     public static volatile SingularAttribute<Cliente, Date> inicio;
     public static volatile SingularAttribute<Cliente, Estado> estadoIdEstado;

@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author LC1300XXXX
+ * @author PC-Cristopher
  */
 @Entity
 @Table(name = "OFERTA")
@@ -63,7 +63,7 @@ public class Oferta implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 250)
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Basic(optional = false)
@@ -92,8 +92,6 @@ public class Oferta implements Serializable {
     @Column(name = "ACTUALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date actualizacion;
-    @OneToMany(mappedBy = "ofertaIdOferta")
-    private Collection<OfertasVisitas> ofertasVisitasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "oferta")
     private Collection<DetalleOferta> detalleOfertaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ofertaIdOferta")
@@ -208,15 +206,6 @@ public class Oferta implements Serializable {
 
     public void setActualizacion(Date actualizacion) {
         this.actualizacion = actualizacion;
-    }
-
-    @XmlTransient
-    public Collection<OfertasVisitas> getOfertasVisitasCollection() {
-        return ofertasVisitasCollection;
-    }
-
-    public void setOfertasVisitasCollection(Collection<OfertasVisitas> ofertasVisitasCollection) {
-        this.ofertasVisitasCollection = ofertasVisitasCollection;
     }
 
     @XmlTransient

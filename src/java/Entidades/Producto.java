@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author LC1300XXXX
+ * @author PC-Cristopher
  */
 @Entity
 @Table(name = "PRODUCTO")
@@ -75,7 +75,7 @@ public class Producto implements Serializable {
     private Date actualizacion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 500)
     @Column(name = "IMAGEN")
     private String imagen;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")

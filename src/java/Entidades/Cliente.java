@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author LC1300XXXX
+ * @author PC-Cristopher
  */
 @Entity
 @Table(name = "CLIENTE")
@@ -83,8 +83,6 @@ public class Cliente implements Serializable {
     @Column(name = "ACTUALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date actualizacion;
-    @OneToMany(mappedBy = "clienteIdCliente")
-    private Collection<OfertasVisitas> ofertasVisitasCollection;
     @JoinColumn(name = "CIUDAD_ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne(optional = false)
     private Ciudad ciudadIdCiudad;
@@ -181,15 +179,6 @@ public class Cliente implements Serializable {
 
     public void setActualizacion(Date actualizacion) {
         this.actualizacion = actualizacion;
-    }
-
-    @XmlTransient
-    public Collection<OfertasVisitas> getOfertasVisitasCollection() {
-        return ofertasVisitasCollection;
-    }
-
-    public void setOfertasVisitasCollection(Collection<OfertasVisitas> ofertasVisitasCollection) {
-        this.ofertasVisitasCollection = ofertasVisitasCollection;
     }
 
     public Ciudad getCiudadIdCiudad() {

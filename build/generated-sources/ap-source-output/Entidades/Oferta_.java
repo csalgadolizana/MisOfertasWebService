@@ -5,7 +5,6 @@ import Entidades.DetalleOferta;
 import Entidades.Estado;
 import Entidades.Informativo;
 import Entidades.Ofertalocal;
-import Entidades.OfertasVisitas;
 import Entidades.Ofertavisi;
 import Entidades.Usuariooferta;
 import Entidades.Valoracion;
@@ -17,14 +16,13 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-10-26T17:21:35")
+@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2017-11-12T20:16:05")
 @StaticMetamodel(Oferta.class)
 public class Oferta_ { 
 
     public static volatile SingularAttribute<Oferta, String> descripcion;
     public static volatile CollectionAttribute<Oferta, Ofertavisi> ofertavisiCollection;
     public static volatile SingularAttribute<Oferta, BigInteger> maximoCompra;
-    public static volatile CollectionAttribute<Oferta, OfertasVisitas> ofertasVisitasCollection;
     public static volatile CollectionAttribute<Oferta, Valoracion> valoracionCollection;
     public static volatile SingularAttribute<Oferta, Date> inicio;
     public static volatile CollectionAttribute<Oferta, DetalleNewsletter> detalleNewsletterCollection;

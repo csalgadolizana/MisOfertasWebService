@@ -58,6 +58,9 @@
     <service name="CiudadService">
       <implementation-class>Servicios.CiudadService</implementation-class>
     </service>
+    <service name="RegionService">
+      <implementation-class>Servicios.RegionService</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

@@ -17,6 +17,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -24,7 +25,7 @@ import javax.persistence.StoredProcedureQuery;
  */
 @WebService(serviceName = "UsuarioService")
 public class UsuarioService {
-
+    
     @PersistenceContext
     EntityManager em;
 
@@ -51,7 +52,7 @@ public class UsuarioService {
         }
         return new Usuario(BigDecimal.ZERO);
     }
-
+    
     @WebMethod(operationName = "Autenticacion")
     public Object Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
         try {
@@ -84,7 +85,7 @@ public class UsuarioService {
                 .getResultList();
         return arr_cust;
     }
-
+    
     @WebMethod(operationName = "CREAR_USUARIO")
     public String CrearUsuario(
             @WebParam(name = "id") int id, @WebParam(name = "correo") String correo,
@@ -120,7 +121,7 @@ public class UsuarioService {
             return 0 + "";
         }
     }
-
+    
     @WebMethod(operationName = "Modificar_USUARIO")
     public String ModificarUsuario(
             @WebParam(name = "id") int id,
@@ -138,7 +139,7 @@ public class UsuarioService {
             query.registerStoredProcedureParameter("TE", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
-
+            
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_US", id);
             query.setParameter("COR", correo);
@@ -146,16 +147,16 @@ public class UsuarioService {
             query.setParameter("TE", telefono);
             query.setParameter("INI", fecha_inicio);
             query.setParameter("ACTU", fecha_actualizacion);
-
+            
             query.execute();
             em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
-            System.out.println("Error en -> ModificarUsuario() -> "+e.getMessage());
+            System.out.println("Error en -> ModificarUsuario() -> " + e.getMessage());
             return 0 + "";
         }
     }
-
+    
     @WebMethod(operationName = "Eliminar_usuario")
     public String EliminarUsuario(@WebParam(name = "id") int idd) {
         try {
