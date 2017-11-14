@@ -30,8 +30,12 @@ public class CategoriaService {
      */
     @WebMethod(operationName = "Listado_categorias")
     public List<Categoria> ListadoCategorias() {
+        System.err.println("1");
         List<Categoria> arr_cust = (List<Categoria>) em.createNativeQuery("select * from VIEW_CATEGORIA c", Categoria.class)
                 .getResultList();
+        System.err.println("2");
+        arr_cust.stream().forEach((x) -> System.err.println("desc " + x.getDescripcion()));
+        System.err.println("3");
         return arr_cust;
     }
 
@@ -50,7 +54,7 @@ public class CategoriaService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Modificar_categoria")
     public String crearCategoria(@WebParam(name = "id") int idd, @WebParam(name = "desc") String desc) {
         try {
@@ -67,7 +71,7 @@ public class CategoriaService {
             return 0 + "";
         }
     }
-    
+
     @WebMethod(operationName = "Eliminar_categoria")
     public String EliminarCategoria(@WebParam(name = "id") int idd) {
         try {
