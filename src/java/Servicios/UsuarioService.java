@@ -80,7 +80,6 @@ public class UsuarioService {
      */
     @WebMethod(operationName = "Listado_usuarios")
     public List<Usuario> ListadoUsuarios() {
-        System.err.println("cirilo");
         List<Usuario> arr_cust = (List<Usuario>) em.createNativeQuery("select * from VIEW_USUARIOS c", Usuario.class)
                 .getResultList();
         return arr_cust;

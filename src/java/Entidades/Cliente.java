@@ -73,10 +73,8 @@ public class Cliente implements Serializable {
     @NotNull
     @Column(name = "TELEFONO")
     private BigInteger telefono;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ACEPTA_INFORMATIVO")
-    private Character aceptaInformativo;
+    private BigInteger aceptaInformativo;
     @Column(name = "INICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
@@ -108,13 +106,12 @@ public class Cliente implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Cliente(BigDecimal idCliente, Date fechaNacimiento, String correo, String contrasena, BigInteger telefono, Character aceptaInformativo) {
+    public Cliente(BigDecimal idCliente, Date fechaNacimiento, String correo, String contrasena, BigInteger telefono) {
         this.idCliente = idCliente;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.contrasena = contrasena;
         this.telefono = telefono;
-        this.aceptaInformativo = aceptaInformativo;
     }
 
     public BigDecimal getIdCliente() {
@@ -157,11 +154,11 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
     }
 
-    public Character getAceptaInformativo() {
+    public BigInteger getAceptaInformativo() {
         return aceptaInformativo;
     }
 
-    public void setAceptaInformativo(Character aceptaInformativo) {
+    public void setAceptaInformativo(BigInteger aceptaInformativo) {
         this.aceptaInformativo = aceptaInformativo;
     }
 

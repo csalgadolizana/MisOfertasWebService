@@ -6,7 +6,7 @@
 package Servicios;
 
 import Entidades.Empresa;
-import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -36,9 +36,8 @@ public class EmpresaService {
 
     @WebMethod(operationName = "Crear_empresa")
     public String CrearEmpresa(
-            @WebParam(name = "id") int idd, @WebParam(name = "rut") String rut,
+            @WebParam(name = "rut") String rut,
             @WebParam(name = "nombre") String nombre, @WebParam(name = "descripcion") String descripcion,
-            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
             @WebParam(name = "id_estado") int id_estado
     ) {
         try {
@@ -47,16 +46,20 @@ public class EmpresaService {
             query.registerStoredProcedureParameter("RUT", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("NOMB", String.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("DES", String.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("INI", Number.class, ParameterMode.IN);
-            query.registerStoredProcedureParameter("ACTU", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("INI", Date.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("ACTU", Date.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
-            query.setParameter("ID_EM", BigDecimal.valueOf(idd));
+            List<Empresa> arr_cust = (List<Empresa>) em.createNativeQuery("select * from VIEW_EMPRESA d", Empresa.class).getResultList();
+            Comparator<Empresa> com = (o1, o2) -> o1.getIdEmpresa().compareTo(o2.getIdEmpresa());
+            int idd = arr_cust.stream().max(com).get().getIdEmpresa().intValue();
+            System.out.println("valor maximo id " + idd + 1);
+            query.setParameter("ID_EM", idd + 1);
             query.setParameter("RUT", rut);
             query.setParameter("NOMB", nombre);
             query.setParameter("DES", descripcion);
-            query.setParameter("INI", fecha_inicio);
-            query.setParameter("ACTU", fecha_actualizacion);
+            query.setParameter("INI", new Date());
+            query.setParameter("ACTU", new Date());
             query.setParameter("ID_ES", id_estado);
             query.execute();
             return query.getOutputParameterValue("SALIDA").toString();
@@ -69,7 +72,6 @@ public class EmpresaService {
     public String ModificarEmpresa(
             @WebParam(name = "idd") int idd, @WebParam(name = "rut") String rut,
             @WebParam(name = "nombre") String nombre, @WebParam(name = "descripcion") String descripcion,
-            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
             @WebParam(name = "id_estado") int id_estado
     ) {
         try {
@@ -85,16 +87,21 @@ public class EmpresaService {
             query.setParameter("ID_EM", idd);
             query.setParameter("RUT", rut);
             query.setParameter("NOMB", nombre);
+            List<Empresa> arr_cust = (List<Empresa>) em.createNativeQuery("select * from VIEW_EMPRESA d", Empresa.class).getResultList();
+            Date fech_ini = arr_cust.stream().filter((x) -> x.getIdEmpresa().intValue() == idd).findFirst().orElse(null).getInicio();
             query.setParameter("DES", descripcion);
-            query.setParameter("INI", fecha_inicio);
-            query.setParameter("ACTU", fecha_actualizacion);
+            System.out.println(" Error en -> Modificar_empresa() -> 16");
+            query.setParameter("INI", fech_ini);
+            System.out.println(" Error en -> Modificar_empresa() -> 17");
+            query.setParameter("ACTU", new Date());
+            System.out.println(" Error en -> Modificar_empresa() -> 18");
             query.setParameter("ID_ES", id_estado);
             query.execute();
             em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
             System.out.println(" Error en -> Modificar_empresa() -> " + e.getMessage());
-            return 0+"";
+            return 0 + "";
         }
     }
 
