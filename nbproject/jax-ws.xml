@@ -61,6 +61,9 @@
     <service name="RegionService">
       <implementation-class>Servicios.RegionService</implementation-class>
     </service>
+    <service name="WebServiceAuthUser">
+      <implementation-class>Servicios.WebServiceAuthUser</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>
