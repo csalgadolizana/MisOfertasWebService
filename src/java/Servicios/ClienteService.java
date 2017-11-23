@@ -202,4 +202,15 @@ public class ClienteService {
         }
     }
 
+    @WebMethod(operationName = "buscar_cliente")
+    public Cliente BuscarCliente(@WebParam(name = "id") int idd) {
+        try {
+            Cliente c = em.find(Cliente.class, BigDecimal.valueOf(idd));
+            return c;
+        } catch (Exception e) {
+            System.err.println("Error en -> BuscarCliente() ->" + e.getMessage());
+            return null;
+        }
+    }
+
 }
