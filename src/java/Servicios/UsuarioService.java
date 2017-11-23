@@ -88,7 +88,6 @@ public class UsuarioService {
     public String CrearUsuario(
             @WebParam(name = "id") int id, @WebParam(name = "correo") String correo,
             @WebParam(name = "password") String password, @WebParam(name = "telefono") int telefono,
-            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
             @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona,
             @WebParam(name = "id_cargo") int id_cargo
     ) {
@@ -108,8 +107,8 @@ public class UsuarioService {
             query.setParameter("COR", correo);
             query.setParameter("PASS", password);
             query.setParameter("TE", telefono);
-            query.setParameter("INI", fecha_inicio);
-            query.setParameter("ACTU", fecha_actualizacion);
+            query.setParameter("INI", new Date());
+            query.setParameter("ACTU", new Date());
             query.setParameter("ID_ES", id_estado);
             query.setParameter("ID_PER", id_persona);
             query.setParameter("ID_CAR", id_cargo);

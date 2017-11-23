@@ -10,6 +10,7 @@ import Utils.MailController;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -18,6 +19,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -28,6 +30,9 @@ public class ClienteService {
 
     @PersistenceContext
     EntityManager em;
+
+    @Resource
+    UserTransaction utx;
 
     @WebMethod(operationName = "Autenticacion")
     public Cliente Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
@@ -166,4 +171,35 @@ public class ClienteService {
             return 0 + "err";
         }
     }
+
+    @WebMethod(operationName = "inicia_sesion_cliente")
+    public int IniciarSesionCliente(@WebParam(name = "id") int idd) {
+        try {
+            Cliente c = em.find(Cliente.class, BigDecimal.valueOf(idd));
+            c.setIsonline(Short.valueOf(1 + ""));
+            utx.begin();
+            c = em.merge(c);
+            utx.commit();
+            return 1;
+        } catch (Exception e) {
+            System.err.println("Error en -> IniciarSesionCliente() ->" + e.getMessage());
+            return 0;
+        }
+    }
+
+    @WebMethod(operationName = "cerrar_sesion_cliente")
+    public int CerrarSesionCliente(@WebParam(name = "id") int idd) {
+        try {
+            Cliente c = em.find(Cliente.class, BigDecimal.valueOf(idd));
+            c.setIsonline(Short.valueOf(2 + ""));
+            utx.begin();
+            c = em.merge(c);
+            utx.commit();
+            return 1;
+        } catch (Exception e) {
+            System.err.println("Error en -> CerrarSesionCliente() ->" + e.getMessage());
+            return 0;
+        }
+    }
+
 }

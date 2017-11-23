@@ -44,7 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cliente.findByTelefono", query = "SELECT c FROM Cliente c WHERE c.telefono = :telefono")
     , @NamedQuery(name = "Cliente.findByAceptaInformativo", query = "SELECT c FROM Cliente c WHERE c.aceptaInformativo = :aceptaInformativo")
     , @NamedQuery(name = "Cliente.findByInicio", query = "SELECT c FROM Cliente c WHERE c.inicio = :inicio")
-    , @NamedQuery(name = "Cliente.findByActualizacion", query = "SELECT c FROM Cliente c WHERE c.actualizacion = :actualizacion")})
+    , @NamedQuery(name = "Cliente.findByActualizacion", query = "SELECT c FROM Cliente c WHERE c.actualizacion = :actualizacion")
+    , @NamedQuery(name = "Cliente.findByIsonline", query = "SELECT c FROM Cliente c WHERE c.isonline = :isonline")})
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,14 +74,18 @@ public class Cliente implements Serializable {
     @NotNull
     @Column(name = "TELEFONO")
     private BigInteger telefono;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ACEPTA_INFORMATIVO")
-    private BigInteger aceptaInformativo;
+    private Character aceptaInformativo;
     @Column(name = "INICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
     @Column(name = "ACTUALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date actualizacion;
+    @Column(name = "ISONLINE")
+    private Short isonline;
     @JoinColumn(name = "CIUDAD_ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne(optional = false)
     private Ciudad ciudadIdCiudad;
@@ -106,12 +111,13 @@ public class Cliente implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Cliente(BigDecimal idCliente, Date fechaNacimiento, String correo, String contrasena, BigInteger telefono) {
+    public Cliente(BigDecimal idCliente, Date fechaNacimiento, String correo, String contrasena, BigInteger telefono, Character aceptaInformativo) {
         this.idCliente = idCliente;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.contrasena = contrasena;
         this.telefono = telefono;
+        this.aceptaInformativo = aceptaInformativo;
     }
 
     public BigDecimal getIdCliente() {
@@ -154,11 +160,11 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
     }
 
-    public BigInteger getAceptaInformativo() {
+    public Character getAceptaInformativo() {
         return aceptaInformativo;
     }
 
-    public void setAceptaInformativo(BigInteger aceptaInformativo) {
+    public void setAceptaInformativo(Character aceptaInformativo) {
         this.aceptaInformativo = aceptaInformativo;
     }
 
@@ -176,6 +182,14 @@ public class Cliente implements Serializable {
 
     public void setActualizacion(Date actualizacion) {
         this.actualizacion = actualizacion;
+    }
+
+    public Short getIsonline() {
+        return isonline;
+    }
+
+    public void setIsonline(Short isonline) {
+        this.isonline = isonline;
     }
 
     public Ciudad getCiudadIdCiudad() {
