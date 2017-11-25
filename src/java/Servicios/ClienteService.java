@@ -8,6 +8,7 @@ package Servicios;
 import Entidades.Cliente;
 import Utils.MailController;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -37,11 +38,13 @@ public class ClienteService {
     @WebMethod(operationName = "Autenticacion")
     public Cliente Autenticar(@WebParam(name = "correo") String correo, @WebParam(name = "contrasena") String contrasena) {
         try {
+            em.getEntityManagerFactory().getCache().evictAll();
             Query q = em.createNativeQuery("SELECT * from TABLE( autenticacion_cliente_package.function_return_cliente(?,?))", Cliente.class);
             q.setParameter(1, correo);
             q.setParameter(2, contrasena);
             List<Cliente> clientes = q.getResultList();
             for (Cliente c : clientes) {
+//                System.out.println("Cliente esta activo ??? == " + c.getIsonline());
                 return c;
             }
         } catch (Exception e) {
@@ -54,10 +57,21 @@ public class ClienteService {
     @WebMethod(operationName = "Listado_clientes")
     public List<Cliente> ListadoCliente() {
         em.getEntityManagerFactory().getCache().evictAll();
-        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class
-        )
-                .getResultList();
+        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class).getResultList();
+//        arr_cust.forEach((x) -> upd(x));
+
         return arr_cust;
+    }
+
+    private void upd(Cliente c) {
+        try {
+            c.setIsonline(new BigInteger(1 + ""));
+            utx.begin();
+            c = em.merge(c);
+            utx.commit();
+        } catch (Exception e) {
+            System.out.println("Error en upd(Cliente c) -> " + e.getMessage());
+        }
     }
 
     @WebMethod(operationName = "Crear_cliente")
@@ -81,8 +95,8 @@ public class ClienteService {
             query.registerStoredProcedureParameter("ID_CI", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ID_ES", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("ID_PER", Number.class, ParameterMode.IN);
+            query.registerStoredProcedureParameter("isonlinee", Number.class, ParameterMode.IN);
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
-            query.setParameter("ID_CLI", idd);
             query.setParameter("FECH", fecha_nacimiento);
             query.setParameter("CORRE", correo);
             query.setParameter("PASS", password);
@@ -93,6 +107,7 @@ public class ClienteService {
             query.setParameter("ID_CI", id_ciudad);
             query.setParameter("ID_ES", id_estado);
             query.setParameter("ID_PER", id_persona);
+            query.setParameter("isonlinee", 1);
             query.execute();
             try {
                 MailController mailController = new MailController();
@@ -176,7 +191,7 @@ public class ClienteService {
     public int IniciarSesionCliente(@WebParam(name = "id") int idd) {
         try {
             Cliente c = em.find(Cliente.class, BigDecimal.valueOf(idd));
-            c.setIsonline(Short.valueOf(1 + ""));
+            c.setIsonline(new BigInteger(1 + ""));
             utx.begin();
             c = em.merge(c);
             utx.commit();
@@ -191,7 +206,7 @@ public class ClienteService {
     public int CerrarSesionCliente(@WebParam(name = "id") int idd) {
         try {
             Cliente c = em.find(Cliente.class, BigDecimal.valueOf(idd));
-            c.setIsonline(Short.valueOf(2 + ""));
+            c.setIsonline(new BigInteger(2 + ""));
             utx.begin();
             c = em.merge(c);
             utx.commit();

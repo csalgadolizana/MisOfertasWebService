@@ -77,15 +77,17 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ACEPTA_INFORMATIVO")
-    private Character aceptaInformativo;
+    private BigInteger aceptaInformativo;
     @Column(name = "INICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
     @Column(name = "ACTUALIZACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date actualizacion;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "ISONLINE")
-    private Short isonline;
+    private BigInteger isonline;
     @JoinColumn(name = "CIUDAD_ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne(optional = false)
     private Ciudad ciudadIdCiudad;
@@ -111,13 +113,14 @@ public class Cliente implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Cliente(BigDecimal idCliente, Date fechaNacimiento, String correo, String contrasena, BigInteger telefono, Character aceptaInformativo) {
+    public Cliente(BigDecimal idCliente, Date fechaNacimiento, String correo, String contrasena, BigInteger telefono, BigInteger aceptaInformativo, BigInteger isonline) {
         this.idCliente = idCliente;
         this.fechaNacimiento = fechaNacimiento;
         this.correo = correo;
         this.contrasena = contrasena;
         this.telefono = telefono;
         this.aceptaInformativo = aceptaInformativo;
+        this.isonline = isonline;
     }
 
     public BigDecimal getIdCliente() {
@@ -160,11 +163,11 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
     }
 
-    public Character getAceptaInformativo() {
+    public BigInteger getAceptaInformativo() {
         return aceptaInformativo;
     }
 
-    public void setAceptaInformativo(Character aceptaInformativo) {
+    public void setAceptaInformativo(BigInteger aceptaInformativo) {
         this.aceptaInformativo = aceptaInformativo;
     }
 
@@ -184,11 +187,11 @@ public class Cliente implements Serializable {
         this.actualizacion = actualizacion;
     }
 
-    public Short getIsonline() {
+    public BigInteger getIsonline() {
         return isonline;
     }
 
-    public void setIsonline(Short isonline) {
+    public void setIsonline(BigInteger isonline) {
         this.isonline = isonline;
     }
 

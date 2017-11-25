@@ -10,11 +10,11 @@
     <service name="DetalleOfertaService">
       <implementation-class>Servicios.DetalleOfertaService</implementation-class>
     </service>
-    <service name="LocalService">
-      <implementation-class>Servicios.LocalService</implementation-class>
-    </service>
     <service name="ReporteService">
       <implementation-class>Servicios.ReporteService</implementation-class>
+    </service>
+    <service name="LocalService">
+      <implementation-class>Servicios.LocalService</implementation-class>
     </service>
     <service name="UsuarioService">
       <implementation-class>Servicios.UsuarioService</implementation-class>
