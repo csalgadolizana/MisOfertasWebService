@@ -132,7 +132,7 @@ public class ClienteService {
             @WebParam(name = "id") int idd, @WebParam(name = "fecha_nacimiento") Date fecha_nacimiento,
             @WebParam(name = "correo") String correo, @WebParam(name = "password") String password,
             @WebParam(name = "telefono") int telefono, @WebParam(name = "acepta_informativo") String acepta_informativo,
-            @WebParam(name = "fecha_inicio") Date fecha_inicio, @WebParam(name = "fecha_actualizacion") Date fecha_actualizacion,
+            @WebParam(name = "fecha_inicio") Date fecha_inicio,
             @WebParam(name = "id_ciudad") int id_ciudad,
             @WebParam(name = "id_estado") int id_estado, @WebParam(name = "id_persona") int id_persona) {
         try {
@@ -156,7 +156,7 @@ public class ClienteService {
             query.setParameter("TE", telefono);
             query.setParameter("ACEP", acepta_informativo);
             query.setParameter("INI", fecha_inicio);
-            query.setParameter("ACTU", fecha_actualizacion);
+            query.setParameter("ACTU", new Date());
             query.setParameter("ID_CI", id_ciudad);
             query.setParameter("ID_ES", id_estado);
             query.setParameter("ID_PER", id_persona);
