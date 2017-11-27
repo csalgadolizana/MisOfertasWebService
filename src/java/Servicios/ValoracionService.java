@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entidades.Valoracion;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -26,12 +25,12 @@ public class ValoracionService {
     @PersistenceContext
     EntityManager em;
 
-    @WebMethod(operationName = "Listado_valoraciones")
-    public List<Valoracion> ListadoValoracion() {
-        List<Valoracion> arr_cust = (List<Valoracion>) em.createNativeQuery("select * from VIEW_VALORACION v", Valoracion.class)
-                .getResultList();
-        return arr_cust;
-    }
+//    @WebMethod(operationName = "Listado_valoraciones")
+//    public List<Valoracion> ListadoValoracion() {
+//        List<Valoracion> arr_cust = (List<Valoracion>) em.createNativeQuery("select * from VIEW_VALORACION v", Valoracion.class)
+//                .getResultList();
+//        return arr_cust;
+//    }
 
     @WebMethod(operationName = "Crear_valoracion")
     public String CrearValoracion(

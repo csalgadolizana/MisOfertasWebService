@@ -102,8 +102,6 @@ public class Oferta implements Serializable {
     private Collection<Usuariooferta> usuarioofertaCollection;
     @OneToMany(mappedBy = "ofertaIdOferta")
     private Collection<DetalleNewsletter> detalleNewsletterCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "oferta")
-    private Collection<Valoracion> valoracionCollection;
     @JoinColumn(name = "ESTADO_ID_ESTADO", referencedColumnName = "ID_ESTADO")
     @ManyToOne(optional = false)
     private Estado estadoIdEstado;
@@ -251,15 +249,6 @@ public class Oferta implements Serializable {
 
     public void setDetalleNewsletterCollection(Collection<DetalleNewsletter> detalleNewsletterCollection) {
         this.detalleNewsletterCollection = detalleNewsletterCollection;
-    }
-
-    @XmlTransient
-    public Collection<Valoracion> getValoracionCollection() {
-        return valoracionCollection;
-    }
-
-    public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
-        this.valoracionCollection = valoracionCollection;
     }
 
     public Estado getEstadoIdEstado() {

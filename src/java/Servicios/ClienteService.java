@@ -20,6 +20,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.UserTransaction;
 
 /**
@@ -56,16 +57,20 @@ public class ClienteService {
 
     @WebMethod(operationName = "Listado_clientes")
     public List<Cliente> ListadoCliente() {
-        em.getEntityManagerFactory().getCache().evictAll();
-        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class).getResultList();
+//        List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class).getResultList();
 //        arr_cust.forEach((x) -> upd(x));
 
-        return arr_cust;
+//        em.getEntityManagerFactory().getCache().evictAll();
+//        return arr_cust;
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Cliente.class));
+        Query q = em.createQuery(cq);
+        return q.getResultList();
     }
 
     private void upd(Cliente c) {
         try {
-            c.setIsonline(new BigInteger(1 + ""));
+            c.setIsonline(new BigInteger("2"));
             utx.begin();
             c = em.merge(c);
             utx.commit();

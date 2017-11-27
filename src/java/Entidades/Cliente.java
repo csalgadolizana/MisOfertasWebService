@@ -101,8 +101,6 @@ public class Cliente implements Serializable {
     private Collection<Ofertavisi> ofertavisiCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteIdCliente")
     private Collection<Descuento> descuentoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private Collection<Valoracion> valoracionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteIdCliente")
     private Collection<Puntos> puntosCollection;
 
@@ -235,15 +233,6 @@ public class Cliente implements Serializable {
 
     public void setDescuentoCollection(Collection<Descuento> descuentoCollection) {
         this.descuentoCollection = descuentoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Valoracion> getValoracionCollection() {
-        return valoracionCollection;
-    }
-
-    public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
-        this.valoracionCollection = valoracionCollection;
     }
 
     @XmlTransient

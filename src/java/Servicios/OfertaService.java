@@ -5,7 +5,9 @@
  */
 package Servicios;
 
+import Entidades.Cliente;
 import Entidades.Oferta;
+import Utils.MailController;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -16,6 +18,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
+import javax.websocket.RemoteEndpoint;
 
 /**
  *
@@ -144,7 +147,33 @@ public class OfertaService {
             return 0 + "err";
         }
     }
-    
+
+    @WebMethod(operationName = "enviar_news_paper")
+    public String enviar_news_paper() {
+        try {
+            em.getEntityManagerFactory().getCache().evictAll();
+            List<Cliente> arr_cust = (List<Cliente>) em.createNativeQuery("select * from VIEW_CLIENTE c", Cliente.class).getResultList();
+//            arr_cust.forEach((x) -> );
+            for (Cliente cliente : arr_cust) {
+                MailController mailController = new MailController();
+                System.err.println("Enviando Mail.");
+                System.err.println("Enviando Mail..");
+                System.err.println("Enviando Mail...");
+                System.err.println("Enviando Mail....");
+                System.err.println("Enviando Mail.....");
+                System.err.println(cliente.getCorreo());
+                System.err.println(cliente.getAceptaInformativo().intValue());
+                if (cliente.getAceptaInformativo().intValue() == 1) {
+                    mailController.enviarBienvenida(cliente.getCorreo(), "Notificacion", "Le notificamos que hay nuevas ofertas disponibles", "", "Saludos de todo el equipo de misOfertas :)");
+                    Thread.sleep(2000);
+                }
+            }
+        } catch (Exception e) {
+            return 0 + "err";
+        }
+        return "";
+    }
+
     @WebMethod(operationName = "dejar_de_publicar_oferta")
     public String dejarDePublicarOferta(@WebParam(name = "id") int idd) {
         try {
@@ -153,7 +182,6 @@ public class OfertaService {
             query.registerStoredProcedureParameter("SALIDA", Number.class, ParameterMode.OUT);
             query.setParameter("ID_OFE", idd);
             query.execute();
-            em.getEntityManagerFactory().getCache().evictAll();
             return query.getOutputParameterValue("SALIDA").toString();
         } catch (Exception e) {
             return 0 + "err";

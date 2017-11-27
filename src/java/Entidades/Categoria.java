@@ -49,8 +49,6 @@ public class Categoria implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
     private Collection<Descuento> descuentoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaIdCategoria")
-    private Collection<Valoracion> valoracionCollection;
     @OneToMany(mappedBy = "categoriaIdCategoria")
     private Collection<Producto> productoCollection;
 
@@ -89,15 +87,6 @@ public class Categoria implements Serializable {
 
     public void setDescuentoCollection(Collection<Descuento> descuentoCollection) {
         this.descuentoCollection = descuentoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Valoracion> getValoracionCollection() {
-        return valoracionCollection;
-    }
-
-    public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
-        this.valoracionCollection = valoracionCollection;
     }
 
     @XmlTransient
